@@ -1,0 +1,8 @@
+<!-- src/posts/first-post.svx -->
+---
+title: First Post
+coverImage: /placeholder.jpg
+date: '2024-01-26'
+---
+
+Content here...
