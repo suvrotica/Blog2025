@@ -1,25 +1,35 @@
 // src/routes/posts/[slug]/+page.ts
 import { error } from '@sveltejs/kit';
 
+interface PostMetadata {
+  title: string;
+  coverImage: string;
+  date: string;
+  description: string;
+}
+
+interface PostModule {
+  metadata: PostMetadata;
+  default: any;
+}
+
 export async function load({ params }) {
   try {
-    // Get all markdown files
-    const posts = import.meta.glob('$lib/posts/*.md');
-    console.log('Available posts:', posts);
-
-    // Get the specific post
-    const postPath = `$lib/posts/${params.slug}.md`;
-    console.log('Looking for post at:', postPath);
+    const posts = import.meta.glob<PostModule>('/src/lib/posts/*.md', { eager: true });
+    const postPath = `/src/lib/posts/${params.slug}.md`;
 
     if (postPath in posts) {
-      const post = await posts[postPath]();
-      console.log('Post loaded:', post);
+      const post = posts[postPath];
+      const frontmatter = post.metadata || {};
       
-      const typedPost = post as { default: string; metadata: Record<string, any> };
-      
+      // In Svelte 5, we directly use the default export
+      // instead of calling render()
       return {
-        content: typedPost.default,
-        meta: typedPost.metadata
+        content: post.default, // Pass the component directly
+        title: frontmatter.title || 'Untitled',
+        coverImage: frontmatter.coverImage || 'https://picsum.photos/seed/fallback/800/600',
+        date: frontmatter.date || new Date().toISOString(),
+        description: frontmatter.description || 'No description available'
       };
     }
 

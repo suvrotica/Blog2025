@@ -1,9 +1,8 @@
-<!-- src/posts/mountain-lake-reflection.md -->
 ---
-title: Mountain Lake Reflection
-coverImage: https://picsum.photos/seed/lake/800/600
-date: '2024-01-27'
-description: Serene mountain lake at sunrise
+title: "Mountain Lake Reflection"
+coverImage: "https://picsum.photos/seed/lake/800/600"
+date: "2024-01-27"
+description: "Serene mountain lake at sunrise"
 ---
 
 # Mountain Lake Photography
