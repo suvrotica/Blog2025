@@ -1,23 +1,22 @@
-// svelte.config.js
 import { mdsvex } from 'mdsvex';
 import adapter from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+  extensions: ['.svelte', '.md'],
   preprocess: [
     vitePreprocess(),
     mdsvex({
-      extensions: ['.svx'],
-      layout: {
-        posts: 'src/lib/layouts/post.svelte'
-      }
+      extensions: ['.md']
     })
   ],
   kit: {
-    adapter: adapter()
-  },
-  extensions: ['.svelte', '.svx']
+    adapter: adapter(),
+    files: {
+      lib: 'src/lib'
+    }
+  }
 };
 
 export default config;
